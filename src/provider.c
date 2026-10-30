@@ -5,9 +5,6 @@
  * formatting dependency. Common supplies the ABI and validates callbacks.
  */
 #include <infiltratr/temporal_clock_resource.h>
-#include <type_traits>
-static_assert(std::is_standard_layout_v<InfiltratrTemporalClockProvider>);
-static_assert(std::is_standard_layout_v<InfiltratrTemporalResourceMetadata>);
 #include "clock-civil.h"
 #include <stdbool.h>
 #include <stdint.h>
@@ -30,11 +27,10 @@ static bool clock_render(const InfiltratrTemporalClockProvider *provider,
     char text[128] = {0};
     int written = -1;
     uint64_t tick;
-    const char *sep = vertical ? "\n" : ":";
 
     (void)provider; (void)locale; (void)latitude; (void)longitude;
     (void)instant; (void)offset; (void)seconds; (void)vertical;
-    (void)tick; (void)sep;
+    (void)tick;
     tick = ticks_at(clock_civil_local_phase(instant, offset), UINT64_C(65536));
     written = snprintf(text, sizeof(text), "%04llX", (unsigned long long)tick);
     if (buffer == NULL || written <= 0 || (size_t)written >= sizeof(text) ||
@@ -80,11 +76,11 @@ static const InfiltratrTemporalClockProvider provider = {
 #else
 #define EXPORT __attribute__((visibility("default")))
 #endif
-extern "C" EXPORT const InfiltratrTemporalResourceMetadata *
+EXPORT const InfiltratrTemporalResourceMetadata *
 infiltratr_temporal_resource_metadata_v1(void);
-extern "C" EXPORT const InfiltratrTemporalClockProvider *
+EXPORT const InfiltratrTemporalClockProvider *
 infiltratr_temporal_clock_provider_v1(void);
-extern "C" EXPORT const InfiltratrTemporalResourceMetadata *
+EXPORT const InfiltratrTemporalResourceMetadata *
 infiltratr_temporal_resource_metadata_v1(void) { return &metadata; }
-extern "C" EXPORT const InfiltratrTemporalClockProvider *
+EXPORT const InfiltratrTemporalClockProvider *
 infiltratr_temporal_clock_provider_v1(void) { return &provider; }
