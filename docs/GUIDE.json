@@ -1,0 +1,14 @@
+{
+  "title": "Hexadecimal Clock",
+  "intro": "This clock divides the local civil day into 65,536 equal ticks, represented by one four-digit hexadecimal number.",
+  "structure": "The digits use 0–9 and A–F, where A is ten and F is fifteen. Each successive digit represents a power of 16. The value runs from 0000 at local midnight to FFFF just before the next midnight. A tick is 86400/65536 ordinary seconds, or 1.318359375 seconds.",
+  "example": "06:00 corresponds to 4000; noon to 8000; 18:00 to C000. The displayed value is a fraction of the day, not a hexadecimal encoding of three separate civil clock fields.",
+  "history": "This is a mathematical modern day partition, distinct from binary civil-field clocks and the historical French decimal clock.",
+  "model": "The provider computes floor(local day phase × 65536 / 86400000000) with the phase in microseconds. It formats the result as four uppercase hexadecimal digits. It schedules the following tick boundary using ceiling division, then rounds the remaining microseconds up to milliseconds.",
+  "limits": "It uses local civil time and a fixed 24-hour model day. The seconds and vertical flags do not change the four-digit notation. It neither reconstructs historical timekeeping nor needs geographic coordinates.",
+  "sources": [
+    "Implementation: https://github.com/Infiltrator-Projects/Clock-Hexadecimal/blob/main/src/provider.c",
+    "Model evidence: https://github.com/Infiltrator-Projects/Clock-Hexadecimal/blob/main/docs/MODEL.md",
+    "Shared contract: https://github.com/Infiltrator-Projects/Libraries/blob/main/docs/TEMPORAL_PROVIDERS.md"
+  ]
+}

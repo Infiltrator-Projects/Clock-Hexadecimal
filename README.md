@@ -12,7 +12,7 @@ The clock owns both its notation and next-visible-tick scheduling. It does not r
 
 ## Status
 
-**Independent source, native installation and releases.** This repository contains the implementation of `hexadecimal`, the supporting code it needs, a one-provider `Makefile` and focused regression fixtures. The copy is based on Common 1.19.78 at `8d60662114e3`; the original Common source remains unchanged.
+**Independent source, native installation and releases.** This repository contains the implementation of `hexadecimal`, the supporting code it needs, a one-provider `Makefile` and focused regression fixtures. The initial extraction was based on Common 1.19.78; current builds link the authoritative Common submodule pinned by the Makefile.
 
 Run `make` to produce `build/Hexadecimal Day Clock.so` and `make check` to run this provider's checks. The pinned Common submodule is required. Independent releases now provide a portable amd64 Debian package, a lightweight hardware-native network installer; GitHub supplies the automatic tag source ZIP. The original Common source is retained.
 
@@ -46,10 +46,7 @@ Run the downloaded `.run --profile aggressive` as an ordinary user. It provision
 
 Each package owns only this provider and its passive documentation. Its `Replaces` declaration transfers this module from `infiltrator-calendar-resources` on existing machines; other modules and Common source remain intact. Native package versions use `+native1` so a same-version generic package does not replace a local optimized build. See [packaging details](docs/PACKAGING.md).
 
-## Installed two-file documentation
+## User manual
 
-Only this clock .so and an illustrated, nontechnical PDF are installed under
-/System/Resources/Clocks/ and /System/Resources/Documentation/Clock-Hexadecimal.pdf.
-Development reports remain in GitHub; native build evidence is held by dpkg.
+The installed PDF is generated from [docs/GUIDE.json](docs/GUIDE.json) using the pinned Common renderer. The package owns only its native clock module and this manual. Engineering records remain in GitHub.
 
-The native RUN downloads the exact provider commit and pinned Common submodule, verifies their identities and builds locally. No source or binary payload is embedded.
